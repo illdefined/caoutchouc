@@ -154,6 +154,9 @@
 	{hyperref}
 	{BerlinBlue}
 \colourlet
+	{quotation}
+	{PhthaloGreen}
+\colourlet
 	{strong}
 	{Sangria}
 
@@ -219,6 +222,34 @@
 \renewrobustcmd*
 	{\pageautorefname}
 	{\page}
+
+% Quotation
+\RequirePackage
+	{csquotes}
+
+\let
+	\@enquote
+	\enquote
+\renewrobustcmd*
+	{\enquote}[1]
+	{\@enquote
+		{\begingroup\colour{quotation}#1\endgroup}}
+
+\renewrobustcmd*
+	{\mkcitation}
+	{\,\footnote}
+\renewrobustcmd
+	{\mktextquote}[6]
+	{#1\begingroup\colour{quotation}#2#4\endgroup#3#6#5}
+\renewrobustcmd
+	{\mkblockquote}[2]
+	{\begingroup\colour{quotation}#1#2\endgroud}
+\renewrobustcmd
+	{\mkbegdispquote}[2]
+	{\begingroup\colour{quotation}}
+\renewrobustcmd
+	{\mkenddispquote}[2]
+	{#1#2\endgroup}
 
 % Miscellaneous packages
 \RequirePackage
