@@ -234,3 +234,5 @@
 
 \widowpenalty=9999
 \clubpenalty=9999
+
+% vim:ft=tex
