@@ -5,11 +5,6 @@
 \ProvidesClass
 	{ caoutchouc }
 
-% Require XeTeX
-\RequirePackage
-	{ ifxetex }
-\RequireXeTeX
-
 \RequirePackage
 	{ l3keys2e }
 
