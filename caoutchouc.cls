@@ -11,9 +11,6 @@
 \RequireXeTeX
 
 \RequirePackage
-	{ etoolbox }
-
-\RequirePackage
 	{ xkeyval }
 
 \define@choicekey
@@ -172,7 +169,7 @@
 		pdfdisplaydoctitle = true ]
 	{ hyperref }
 
-\AfterPreamble {
+\AtBeginDocument {
 	\hypersetup {
 		pdftitle = { \@title },
 		pdfauthor = { \@author },
