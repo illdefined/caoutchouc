@@ -1,39 +1,43 @@
 \RequirePackage
-	{expl3}
+	{ expl3 }
 
+\ExplSyntaxOn
 \ProvidesClass
-	{caoutchouc}
+	{ caoutchouc }
 
 % Require XeTeX
 \RequirePackage
-	{ifxetex}
+	{ ifxetex }
 \RequireXeTeX
 
 \RequirePackage
-	{etoolbox}
+	{ etoolbox }
 
 \RequirePackage
-	{xkeyval}
+	{ xkeyval }
 
 \define@choicekey
-	{\XKV@documentclass}
-	{class}[\val\nr]
-	{book, report, article, letter}
-	{\newcommand*
-		{\@class}
-		{\ifcase\nr
-			scrbook\or
-			scrreprt\or
-			scrartcl\or
-			scrlttr2\fi}}
+	{ \XKV@documentclass }
+	{ class } [ \val\nr ]
+	{ book, report, article, letter } {
+		\tl_set:Nn
+			\caoutchouc_class {
+				\ifcase\nr
+					scrbook
+				\or
+					scrreprt
+				\or
+					scrartcl
+				\or
+					scrlttr2
+				\fi }}
 
 \ProcessOptionsX
 
 \LoadClass
-	[parskip = half]
-	{\@class}
+	[ parskip = half ]
+	{ \caoutchouc_class }
 
-\ExplSyntaxOn
 % Fount settings
 \RequirePackage
 	{ fontspec }
@@ -223,49 +227,64 @@
 \tl_set:Nn
 	\pageautorefname
 	\page
-\ExplSyntaxOff
 
 % Quotation
 \RequirePackage
-	{csquotes}
+	{ csquotes }
 
-\let
-	\@enquote
+\tl_set_eq:NN
+	\caoutchouc_enquote
 	\enquote
-\renewrobustcmd*
-	{\enquote}[1]
-	{\@enquote
-		{\begingroup\colour{quotation}#1\endgroup}}
 
-\renewrobustcmd*
-	{\mkcitation}
-	{\,\footnote}
-\renewrobustcmd
-	{\mktextquote}[6]
-	{#1\begingroup\colour{quotation}#2#4\endgroup#3#6#5}
-\renewrobustcmd
-	{\mkblockquote}[2]
-	{\begingroup\colour{quotation}#1#2\endgroud}
-\renewrobustcmd
-	{\mkbegdispquote}[2]
-	{\begingroup\colour{quotation}}
-\renewrobustcmd
-	{\mkenddispquote}[2]
-	{#1#2\endgroup}
+\DeclareDocumentCommand
+	\enquote { m } {
+		\caoutchouc_enquote {
+			\textcolour
+				{ quotation }
+				{ #1 }}}
+
+\DeclareDocumentCommand
+	\mkcitation { m }
+	{ #1\,\footnote }
+\DeclareDocumentCommand
+	\mktextquote { m m m m m m } {
+		#1 \textcolour
+			{ quotation }
+			{ #2 #4 }
+		#3 #6 #5 }
+\DeclareDocumentCommand
+	\mkblockquote { m m } {
+		\color_group_begin:
+			\colour
+				{ quotation }
+			#1 #2
+		\color_group_end: }
+\DeclareDocumentCommand
+	\mkbegdispquote { m m }
+	{ \color_group_begin:
+		\colour
+			{ quotation }}
+\DeclareDocumentCommand
+	\mkenddispquote { m m }
+		{ #1 #2 \color_group_end: }
 
 % Miscellaneous packages
 \RequirePackage
-	{paralist, units, verbatim, xltxtra}
+	{ paralist, units, verbatim, xltxtra }
 
 % Highlighting
-\renewrobustcmd*
-	{\emph}[1]
-	{\textcolour{emphasis}{\em #1}}
-\newrobustcmd*
-	{\strong}[1]
-	{\textcolour{strong}{\bfseries #1}}
+\DeclareDocumentCommand
+	\emph { m } {
+		\textcolour
+			{ emphasis }
+			{ \em #1 }}
+\DeclareDocumentCommand
+	\strong { m } {
+		\textcolour
+			{ strong }
+			{ \bfseries #1 }}
 
-\widowpenalty=9999
-\clubpenalty=9999
+\widowpenalty = 9999
+\clubpenalty = 9999
 
 % vim:ft=tex
