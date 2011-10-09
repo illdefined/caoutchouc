@@ -93,67 +93,74 @@
 	range = {
 		\mathtt / { latin, Latin, greek, Greek, num }}]
 	{ M+~2m~regular }
-\ExplSyntaxOff
 
 \RequirePackage
-	{polyglossia}
+	{ polyglossia }
 
 % Colours
 \RequirePackage
-	[hyperref]
-	{xcolor}
+	[ hyperref ]
+	{ xcolor }
 
 % Command aliases
-\newrobustcmd*
-	{\definecolour}
-	{\definecolor}
-\newrobustcmd*
-	{\providecolour}
-	{\providecolor}
-\newrobustcmd*
-	{\colourlet}
-	{\colorlet}
-\newrobustcmd*
-	{\colour}
-	{\color}
-\newrobustcmd*
-	{\textcolour}
-	{\textcolor}
+\tl_set:Nn
+	\definecolour
+	\definecolor
+\tl_set:Nn
+	\providecolour
+	\providecolor
+\tl_set:Nn
+	\colourlet
+	\colorlet
+\tl_set:Nn
+	\colour
+	\color
+\tl_set:Nn
+	\textcolour
+	\textcolor
 
 \definecolour
-	{PrussianBlue}
-	{rgb}{0, 0.19140625, 0.32421875}
+	{ PrussianBlue }
+	{ rgb }
+	{ 0, 0.19140625, 0.32421875 }
 \definecolour
-	{MidnightGreen}
-	{rgb}{0, 0.28515625, 0.32421875}
+	{ MidnightGreen }
+	{ rgb }
+	{ 0, 0.28515625, 0.32421875 }
 \definecolour
-	{PhthaloGreen}
-	{rgb}{0.0703125, 0.20703125, 0.140625}
+	{ PhthaloGreen }
+	{ rgb }
+	{ 0.0703125, 0.20703125, 0.140625 }
 \definecolour
-	{BerlinBlue}
-	{rgb}{0.13671875, 0.171875, 0.24609375}
+	{ BerlinBlue }
+	{ rgb }
+	{ 0.13671875, 0.171875, 0.24609375 }
 \definecolour
-	{DarkSlateGrey}
-	{rgb}{0.18359375, 0.30859375, 0.30859375}
+	{ DarkSlateGrey }
+	{ rgb }
+	{ 0.18359375, 0.30859375, 0.30859375 }
 \definecolour
-	{TyrianPurple}
-	{rgb}{0.3984375, 0.0078125, 0.234375}
+	{ TyrianPurple }
+	{ rgb }
+	{ 0.3984375, 0.0078125, 0.234375 }
 \definecolour
-	{Sangria}
-	{rgb}{0.5703125, 0, 0.0390625}
+	{ Sangria }
+	{ rgb }
+	{ 0.5703125, 0, 0.0390625 }
 
 \colourlet
-	{emphasis}
-	{TyrianPurple}
+	{ emphasis }
+	{ TyrianPurple }
 \colourlet
-	{hyperref}
-	{BerlinBlue}
+	{ hyperref }
+	{ BerlinBlue }
 \colourlet
-	{quotation}
-	{PhthaloGreen}
+	{ quotation }
+	{ PhthaloGreen }
 \colourlet
-	{strong}
-	{Sangria}
+	{ strong }
+	{ Sangria }
+\ExplSyntaxOff
 
 \RequirePackage
 	[colorlinks = true,
