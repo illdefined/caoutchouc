@@ -164,11 +164,17 @@
 	{ 0.5703125, 0, 0.0390625 }
 
 \colourlet
+	{ disposition }
+	{ PrussianBlue }
+\colourlet
 	{ emphasis }
 	{ TyrianPurple }
 \colourlet
 	{ hyperref }
 	{ BerlinBlue }
+\colourlet
+	{ pagination }
+	{ DarkSlateGrey }
 \colourlet
 	{ quotation }
 	{ PhthaloGreen }
@@ -282,6 +288,108 @@
 % Miscellaneous packages
 \RequirePackage
 	{ paralist, units, verbatim, xltxtra }
+
+% Adjust KOMA-script formatting
+\setotherlanguage
+	[ variant = ancient ]
+	{ greek }
+
+\addtokomafont
+	{ disposition } {
+		\colour
+			{ disposition }}
+\addtokomafont
+	{ pagination } {
+		\colour
+			{ pagination }}
+\addtokomafont
+	{ pagenumber }
+	{ \greeknumber }
+
+\tl_set:Nn
+	\thepart {
+		\textcolour
+			{ pagination }
+			{ \greeknumber\c@part }}
+\tl_set:Nn
+	\thesection {
+		\textcolour
+			{ pagination }
+			{ \greeknumber\c@section }}
+\tl_set:Nn
+	\thesubsection {
+		\textcolour
+			{ pagination }
+			{ \enskip\greeknumber\c@subsection }}
+\tl_set:Nn
+	\thesubsubsection {
+		\textcolour
+			{ pagination }
+			{ \enskip\greeknumber\c@subsubsection }}
+\tl_set:Nn
+	\theparagraph {
+		\textcolour
+			{ pagination }
+			{ \enskip\greeknumber\c@paragraph }}
+\tl_set:Nn
+	\thesubparagraph {
+		\textcolour
+			{ pagination }
+			{ \enskip\greeknumber\c@subparagraph }}
+\tl_set:Nn
+	\thefigure {
+		\textcolour
+			{ pagination }
+			{ \greeknumber\c@figure }}
+\tl_set:Nn
+	\thetable {
+		\textcolour
+			{ pagination }
+			{ \greeknumber\c@table }}
+\tl_set:Nn
+	\thefootnote {
+		\textcolour
+			{ pagination }
+			{ \greeknumber\c@footnote }}
+\tl_set:Nn
+	\thempfootnote {
+		\textcolour
+			{ pagination }
+			{ \greeknumber\c@mpfootnote }}
+
+\tl_set:Nn
+	\theenumi
+	{ \greeknumber\c@enumi }
+\tl_set:Nn
+	\theenumii
+	{ \greeknumber\c@enumii }
+\tl_set:Nn
+	\theenumiii
+	{ \greeknumber\c@enumiii }
+\tl_set:Nn
+	\theenumiv
+	{ \greeknumber\c@enumiv }
+
+\tl_set:Nn
+	\labelenumi {
+		\textcolour
+			{ pagination }
+			{ \theenumi }}
+\tl_set:Nn
+	\labelenumii {
+		\textcolour
+			{ pagination }
+			{ \theenumii }}
+\tl_set:Nn
+	\labelenumiii {
+		\textcolour
+			{ pagination }
+			{ \theenumiii }}
+\tl_set:Nn
+	\labelenumiv {
+		\textcolour
+			{ pagination }
+			{ \theenumiv }}
 
 % Highlighting
 \DeclareDocumentCommand
