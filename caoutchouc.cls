@@ -95,6 +95,20 @@
 		\mathtt / { latin, Latin, greek, Greek, num }}]
 	{ M+~2m~regular }
 
+% CJK fount settings
+\RequirePackage
+	{ xeCJK }
+
+\normalspacedchars
+	{ „“”‚‘’ }
+
+\RequirePackage
+	{ ruby }
+
+\tl_set:Nn
+	\rubysep
+	{ 0ex }
+
 \RequirePackage
 	{ polyglossia }
 
