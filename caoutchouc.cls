@@ -1,3 +1,6 @@
+\RequirePackage
+	{expl3}
+
 \ProvidesClass
 	{caoutchouc}
 
@@ -30,62 +33,67 @@
 	[parskip = half]
 	{\@class}
 
+\ExplSyntaxOn
 % Fount settings
 \RequirePackage
-	{fontspec}
+	{ fontspec }
 
 \defaultfontfeatures
-	{Mapping = tex-text}
+	{ Mapping = tex-text }
 
-\newcommand*
-	{\@slant}
-	{FakeSlant = 0.1}
+\cs_new:Nn
+	\caoutchouc_slant:
+		{ FakeSlant = 0.1 }
 
-\newcommand*
-	{\@mplus}[1]
-	{UprightFont = * 2#1 regular,
-		SlantedFont = * 2#1 regular,
-		ItalicFont = * 1#1 regular,
-		BoldFont = * 2#1 bold,
-		BoldSlantedFont = * 2#1 bold,
-		BoldItalicFont = * 1#1 bold,
-		SlantedFeatures = {\@slant},
-		ItalicFeatures = {\@slant},
-		BoldSlantedFeatures = {\@slant},
-		BoldItalicFeatures = {\@slant}}
+\cs_new:Nn
+	\caoutchouc_mplus:n {
+		UprightFont = *~2#1~regular,
+		SlantedFont = *~2#1~regular,
+		ItalicFont = *~1#1~regular,
+		BoldFont = *~2#1~bold,
+		BoldSlantedFont = *~2#1~bold,
+		BoldItalicFont = *~1#1~bold,
+		SlantedFeatures = { \caoutchouc_slant: },
+		ItalicFeatures = { \caoutchouc_slant: },
+		BoldSlantedFeatures = { \caoutchouc_slant: },
+		BoldItalicFeatures = { \caoutchouc_slant: }}
 
 \setsansfont
-	[\@mplus{c}]{M+}
+	[ \caoutchouc_mplus:n c ]
+	{ M+ }
 \setmonofont
-	[\@mplus{m}]{M+}
+	[ \caoutchouc_mplus:n m ]
+	{ M+ }
 
 % Set the default family to sans-serif
-\renewrobustcmd*
-	{\familydefault}
-	{\sfdefault}
+\tl_set:Nn
+	\familydefault
+	\sfdefault
 
 % Mathematics
 \RequirePackage
-	{amsmath}
+	{ amsmath }
 \RequirePackage
-	[math-style = upright]
-	{unicode-math}
+	[ math-style = upright ]
+	{ unicode-math }
 
 \setmathfont
-	{STIXGeneral}
-\setmathfont
-	[range =
-		{\mathup/{latin, Latin, greek, Greek, num},
-			\mathsf/{latin, Latin, greek, Greek, num}}]
-	{M+ 2c regular}
-\setmathfont
-	[range = {\mathit/{latin, Latin, greek, Greek, num}},
-		UprightFeatures = {\@slant}]
-	{M+ 1c regular}
-\setmathfont
-	[range = {\mathtt/{latin, Latin, greek, Greek, num}}]
-	{M+ 2m regular}
-
+	{ STIXGeneral }
+\setmathfont [
+	range = {
+		\mathup / { latin, Latin, greek, Greek, num },
+		\mathsf / { latin, Latin, greek, Greek, num }}]
+	{ M+~2c~regular }
+\setmathfont [
+	range = {
+		\mathit / { latin, Latin, greek, Greek, num }},
+	UprightFeatures = { \caoutchouc_slant: }]
+	{ M+~1c~regular }
+\setmathfont [
+	range = {
+		\mathtt / { latin, Latin, greek, Greek, num }}]
+	{ M+~2m~regular }
+\ExplSyntaxOff
 
 \RequirePackage
 	{polyglossia}
