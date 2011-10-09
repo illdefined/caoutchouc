@@ -160,70 +160,70 @@
 \colourlet
 	{ strong }
 	{ Sangria }
-\ExplSyntaxOff
 
-\RequirePackage
-	[colorlinks = true,
+\RequirePackage [
+		colorlinks = true,
 		allcolors = hyperref
 		unicode = true,
-		pdfdisplaydoctitle = true]
-	{hyperref}
+		pdfdisplaydoctitle = true ]
+	{ hyperref }
 
-\AfterPreamble
-	{\hypersetup
-		{pdftitle = {\@title},
-			pdfauthor = {\@author},
-			pdfsubject = {\@subject}}}
+\AfterPreamble {
+	\hypersetup {
+		pdftitle = { \@title },
+		pdfauthor = { \@author },
+		pdfsubject = { \@subject }}}
 
 % hyperref language fixes
-\renewrobustcmd*
-	{\equationautorefname}
-	{\equationname}
-\renewrobustcmd*
-	{\footnoteautorefname}
-	{\Hfootnotename}
-\renewrobustcmd*
-	{\itemautorefname}
-	{\Itemname}
-\renewrobustcmd*
-	{\figureautorefname}
-	{\figurename}
-\renewrobustcmd*
-	{\tableautorefname}
-	{\tablename}
-\renewrobustcmd*
-	{\partautorefname}
-	{\partname}
-\renewrobustcmd*
-	{\appendixautorefname}
-	{\appendixname}
-\renewrobustcmd*
-	{\chapterautorefname}
-	{\chaptername}
-\renewrobustcmd*
-	{\sectionautorefname}
-	{\sectionname}
-\renewrobustcmd*
-	{\subsectionautorefname}
-	{\subsectionname}
-\renewrobustcmd*
-	{\subsubsectionautorefname}
-	{\subsubsectionname}
-\renewrobustcmd*
-	{\paragraphautorefname}
-	{\paragraphname}
-\renewrobustcmd*
-	{\subparagraphautorefname}
-	{\subparagraphname}
-\renewrobustcmd*
-	{\FancyVerbLineautorefname}
-	{\FancyVerbLinename}
-\renewrobustcmd*
-	{\theoremautorefname}
-	{\theoremname}
-\renewrobustcmd*
-	{\pageautorefname}
-	{\page}
+\tl_set:Nn
+	\equationautorefname
+	\equationname
+\tl_set:Nn
+	\footnoteautorefname
+	\Hfootnotename
+\tl_set:Nn
+	\itemautorefname
+	\Itemname
+\tl_set:Nn
+	\figureautorefname
+	\figurename
+\tl_set:Nn
+	\tableautorefname
+	\tablename
+\tl_set:Nn
+	\partautorefname
+	\partname
+\tl_set:Nn
+	\appendixautorefname
+	\appendixname
+\tl_set:Nn
+	\chapterautorefname
+	\chaptername
+\tl_set:Nn
+	\sectionautorefname
+	\sectionname
+\tl_set:Nn
+	\subsectionautorefname
+	\subsectionname
+\tl_set:Nn
+	\subsubsectionautorefname
+	\subsubsectionname
+\tl_set:Nn
+	\paragraphautorefname
+	\paragraphname
+\tl_set:Nn
+	\subparagraphautorefname
+	\subparagraphname
+\tl_set:Nn
+	\FancyVerbLineautorefname
+	\FancyVerbLinename
+\tl_set:Nn
+	\theoremautorefname
+	\theoremname
+\tl_set:Nn
+	\pageautorefname
+	\page
+\ExplSyntaxOff
 
 % Quotation
 \RequirePackage
