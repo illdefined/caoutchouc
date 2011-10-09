@@ -11,25 +11,30 @@
 \RequireXeTeX
 
 \RequirePackage
-	{ xkeyval }
+	{ l3keys2e }
 
-\define@choicekey
-	{ \XKV@documentclass }
-	{ class } [ \val\nr ]
-	{ book, report, article, letter } {
-		\tl_set:Nn
-			\caoutchouc_class {
-				\ifcase\nr
-					scrbook
-				\or
-					scrreprt
-				\or
-					scrartcl
-				\or
-					scrlttr2
-				\fi }}
+\keys_define:nn
+	{ caoutchouc } {
+		class .choice:,
+		class / book .code:n = {
+			\tl_set:Nn
+				\caoutchouc_class
+				{ scrbook }},
+		class / report .code:n = {
+			\tl_set:Nn
+				\caoutchouc_class
+				{ scrreprt }},
+		class / article .code:n = {
+			\tl_set:Nn
+				\caoutchouc_class
+				{ scrartcl }},
+		class / letter .code:n = {
+			\tl_set:Nn
+				\caoutchouc_class
+				{ scrlttr2 }}}
 
-\ProcessOptionsX
+\ProcessKeysOptions
+	{ caoutchouc }
 
 \LoadClass
 	[ parskip = half ]
