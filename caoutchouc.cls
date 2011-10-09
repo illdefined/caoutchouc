@@ -98,19 +98,6 @@
 \RequirePackage
 	{polyglossia}
 
-\setdefaultlanguage
-	{german}
-\setotherlanguage
-	[variant = british]
-	{english}
-\setotherlanguage
-	{french}
-\setotherlanguage
-	[variant = ancient]
-	{greek}
-\setotherlanguage
-	{spanish}
-
 % Colours
 \RequirePackage
 	[hyperref]
