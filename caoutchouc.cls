@@ -171,12 +171,6 @@
 		pdfdisplaydoctitle = true ]
 	{ hyperref }
 
-\AtBeginDocument {
-	\hypersetup {
-		pdftitle = { \@title },
-		pdfauthor = { \@author },
-		pdfsubject = { \@subject }}}
-
 % hyperref language fixes
 \tl_set:Nn
 	\equationautorefname
