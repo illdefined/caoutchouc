@@ -184,7 +184,7 @@
 
 \RequirePackage [
 		colorlinks = true,
-		allcolors = hyperref
+		allcolors = hyperref,
 		unicode = true,
 		pdfdisplaydoctitle = true ]
 	{ hyperref }
