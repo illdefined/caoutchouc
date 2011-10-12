@@ -403,7 +403,9 @@
 			{ strong }
 			{ \bfseries #1 }}
 
-\widowpenalty = 9999
-\clubpenalty = 9999
+\widowpenalty = 10000
+\clubpenalty = 10000
+\hyphenpenalty = 2500
+\tolerance = 1000
 
 % vim:ft=tex
