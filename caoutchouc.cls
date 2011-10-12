@@ -270,10 +270,14 @@
 	[ variant = ancient ]
 	{ greek }
 
-\addtokomafont
-	{ disposition } {
-		\colour
-			{ disposition }}
+\@ifclassloaded
+	{ scrlttr2 }
+	{ } {
+		\addtokomafont
+			{ disposition } {
+				\colour
+					{ disposition }}
+	}
 \addtokomafont
 	{ pagination } {
 		\colour
