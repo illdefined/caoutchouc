@@ -26,13 +26,20 @@
 		class / letter .code:n = {
 			\tl_set:Nn
 				\caoutchouc_class
-				{ scrlttr2 }}}
+				{ scrlttr2 }},
+
+		paper .tl_set:N = \caoutchouc_paper }
+
+\keys_set:nn
+	{ caoutchouc } {
+		paper = a4 }
 
 \ProcessKeysOptions
 	{ caoutchouc }
 
-\LoadClass
-	[ parskip = half ]
+\LoadClass [
+		paper = \caoutchouc_paper,
+		parskip = half ]
 	{ \caoutchouc_class }
 
 % Fount settings
