@@ -32,6 +32,7 @@
 
 \keys_set:nn
 	{ caoutchouc } {
+		class = article,
 		paper = a4 }
 
 \ProcessKeysOptions
