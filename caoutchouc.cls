@@ -302,10 +302,10 @@
 	{ pagination } {
 		\colour
 			{ pagination }}
-\addtokomafont
-	{ pagenumber }
-	{ \greeknumber }
 
+\tl_set:Nn
+	\thepage
+		{ \greeknumber\c@page }
 \tl_set:Nn
 	\thepart {
 		\textcolour
