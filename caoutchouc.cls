@@ -13,35 +13,31 @@
 		class .choice:,
 		class / book .code:n = {
 			\tl_set:Nn
-				\caoutchouc_class
+				\g_caoutchouc_class
 				{ scrbook }},
 		class / report .code:n = {
 			\tl_set:Nn
-				\caoutchouc_class
+				\g_caoutchouc_class
 				{ scrreprt }},
 		class / article .code:n = {
 			\tl_set:Nn
-				\caoutchouc_class
+				\g_caoutchouc_class
 				{ scrartcl }},
 		class / letter .code:n = {
 			\tl_set:Nn
-				\caoutchouc_class
-				{ scrlttr2 }},
-
-		paper .tl_set:N = \caoutchouc_paper }
+				\g_caoutchouc_class
+				{ scrlttr2 }}}
 
 \keys_set:nn
-	{ caoutchouc } {
-		class = article,
-		paper = a4 }
+	{ caoutchouc }
+	{ class = article }
 
 \ProcessKeysOptions
 	{ caoutchouc }
 
-\LoadClass [
-		paper = \caoutchouc_paper,
-		parskip = half ]
-	{ \caoutchouc_class }
+\LoadClass
+	[ parskip = half ]
+	{ \g_caoutchouc_class }
 
 % Fount settings
 \RequirePackage
