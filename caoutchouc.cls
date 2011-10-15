@@ -44,28 +44,19 @@
 	{ fontspec }
 
 \defaultfontfeatures {
-	Mapping = tex-text,
-	UprightFont = *~regular,
-	BoldFont = *~bold,
-	ItalicFont = *~regular,
-	BoldItalicFont = *~bold,
-	SlantedFont = *~regular,
-	BoldSlantedFont = *~bold,
-	ItalicFeatures =
-		{ FakeSlant = 0.17 },
-	BoldItalicFeatures =
-		{ FakeSlant = 0.17 },
-	SlantedFeatures =
-		{ FakeSlant = 0.17 },
-	BoldSlantedFeatures =
-		{ FakeSlant = 0.17 }}
+	Mapping = tex-text
+}
 
 \setmainfont
-	{ M+~2c }
+	{ Latin~Modern~Roman }
 \setsansfont
-	{ M+~2c }
+	{ Latin~Modern~Sans }
 \setmonofont
-	{ M+~2m }
+	{ Latin~Modern~Mono }
+
+\tl_set:Nn
+	\familydefault
+	\sfdefault
 
 % Mathematics
 \RequirePackage
@@ -75,11 +66,22 @@
 	{ unicode-math }
 
 \setmathfont
-	{ M+~2c }
+	{ Latin~Modern~Math }
 
 % CJK fount settings
-\RequirePackage
+\RequirePackage [
+		CJKnumber,
+		SlantFont ]
 	{ xeCJK }
+
+\setCJKmainfont [
+		UprightFont = { *~regular },
+		BoldFont = { *~bold } ]
+	{ M+~2c }
+\setCJKsansfont [
+		UprightFont = { *~regular },
+		BoldFont = { *~bold } ]
+	{ M+~2c }
 
 \normalspacedchars
 	{ „“”‚‘’ }
