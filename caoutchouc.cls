@@ -339,6 +339,9 @@
 	\thepart
 	{ pagination }
 \caoutchouc_colour:Nn
+	\thechapter
+	{ pagination }
+\caoutchouc_colour:Nn
 	\thesection
 	{ pagination }
 \caoutchouc_colour:Nn
