@@ -335,93 +335,49 @@
 		\colour
 			{ pagination }}
 
-\tl_set:Nn
-	\thepage
-		{ \greeknumber\c@page }
-\tl_set:Nn
-	\thepart {
-		\textcolour
-			{ pagination }
-			{ \greeknumber\c@part }}
-\tl_set:Nn
-	\thesection {
-		\textcolour
-			{ pagination }
-			{ \greeknumber\c@section }}
-\tl_set:Nn
-	\thesubsection {
-		\textcolour
-			{ pagination }
-			{ \enskip\greeknumber\c@subsection }}
-\tl_set:Nn
-	\thesubsubsection {
-		\textcolour
-			{ pagination }
-			{ \enskip\greeknumber\c@subsubsection }}
-\tl_set:Nn
-	\theparagraph {
-		\textcolour
-			{ pagination }
-			{ \enskip\greeknumber\c@paragraph }}
-\tl_set:Nn
-	\thesubparagraph {
-		\textcolour
-			{ pagination }
-			{ \enskip\greeknumber\c@subparagraph }}
-\tl_set:Nn
-	\thefigure {
-		\textcolour
-			{ pagination }
-			{ \greeknumber\c@figure }}
-\tl_set:Nn
-	\thetable {
-		\textcolour
-			{ pagination }
-			{ \greeknumber\c@table }}
-\tl_set:Nn
-	\thefootnote {
-		\textcolour
-			{ pagination }
-			{ \greeknumber\c@footnote }}
-\tl_set:Nn
-	\thempfootnote {
-		\textcolour
-			{ pagination }
-			{ \greeknumber\c@mpfootnote }}
+\caoutchouc_colour:Nn
+	\thepart
+	{ pagination }
+\caoutchouc_colour:Nn
+	\thesection
+	{ pagination }
+\caoutchouc_colour:Nn
+	\thesubsection
+	{ pagination }
+\caoutchouc_colour:Nn
+	\thesubsubsection
+	{ pagination }
+\caoutchouc_colour:Nn
+	\theparagraph
+	{ pagination }
+\caoutchouc_colour:Nn
+	\thesubparagraph
+	{ pagination }
+\caoutchouc_colour:Nn
+	\thefigure
+	{ pagination }
+\caoutchouc_colour:Nn
+	\thetable
+	{ pagination }
+\caoutchouc_colour:Nn
+	\thefootnote
+	{ pagination }
+\caoutchouc_colour:Nn
+	\thempfootnote
+	{ pagination }
 
-\tl_set:Nn
-	\theenumi
-	{ \greeknumber\c@enumi }
-\tl_set:Nn
-	\theenumii
-	{ \greeknumber\c@enumii }
-\tl_set:Nn
-	\theenumiii
-	{ \greeknumber\c@enumiii }
-\tl_set:Nn
-	\theenumiv
-	{ \greeknumber\c@enumiv }
-
-\tl_set:Nn
-	\labelenumi {
-		\textcolour
-			{ pagination }
-			{ \theenumi }}
-\tl_set:Nn
-	\labelenumii {
-		\textcolour
-			{ pagination }
-			{ \theenumii }}
-\tl_set:Nn
-	\labelenumiii {
-		\textcolour
-			{ pagination }
-			{ \theenumiii }}
-\tl_set:Nn
-	\labelenumiv {
-		\textcolour
-			{ pagination }
-			{ \theenumiv }}
+\caoutchouc_colour:Nn
+	\labelenumi
+	{ pagination }
+\caoutchouc_colour:Nn
+	\labelenumii
+	{ pagination }
+\caoutchouc_colour:Nn
+	\labelenumiii
+	{ pagination }
+\caoutchouc_colour:Nn
+	\labelenumiv
+	{ pagination }
 
 % Highlighting
 \DeclareDocumentCommand
