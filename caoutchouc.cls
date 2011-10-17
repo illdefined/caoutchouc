@@ -43,6 +43,18 @@
 			{ #2 }
 	}
 
+\cs_new:Nn
+	\caoutchouc_colour:Nn {
+		\caoutchouc_encap:Nn
+			#1 {
+			\color_group_begin:
+				\colour
+					{ #2 }
+				#1
+			\color_group_end:
+		}
+	}
+
 \RequirePackage
 	{ l3keys2e }
 
