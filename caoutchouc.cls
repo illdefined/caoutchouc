@@ -5,6 +5,44 @@
 \ProvidesClass
 	{ caoutchouc }
 
+\int_new:N
+	\g_caoutchouc_unique_int
+
+\cs_new:Nn
+	\caoutchouc_unique:N {
+		\tl_set:Nx
+			#1 {
+			caoutchouc_unique_
+			\int_to_alph:n {
+				\int_use:N
+					\g_caoutchouc_unique_int } }
+		\int_gincr:N
+			\g_caoutchouc_unique_int }
+
+\cs_new:Nn
+	\caoutchouc_encap:NNn {
+		\tl_set_eq:NN
+			#2 #1
+		\tl_set:Nn
+			#1 { #3 }
+		\tl_replace_all:Nnn
+			#1 { #1 } { #2 }
+	}
+
+\cs_generate_variant:Nn
+	\caoutchouc_encap:NNn
+		{ Ncn }
+
+\cs_new:Nn
+	\caoutchouc_encap:Nn {
+		\caoutchouc_unique:N
+			\l_tmpa_tl
+		\caoutchouc_encap:Ncn
+			#1
+			{ \l_tmpa_tl }
+			{ #2 }
+	}
+
 \RequirePackage
 	{ l3keys2e }
 
