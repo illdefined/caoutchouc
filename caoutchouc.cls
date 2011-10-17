@@ -9,15 +9,25 @@
 	\g_caoutchouc_unique_int
 
 \cs_new:Nn
-	\caoutchouc_unique:N {
+	\caoutchouc_unique_step:N {
 		\tl_set:Nx
 			#1 {
-			caoutchouc_unique_
+			caoutchouc_unique__
 			\int_to_alph:n {
 				\int_use:N
 					\g_caoutchouc_unique_int } }
 		\int_gincr:N
 			\g_caoutchouc_unique_int }
+
+\cs_new:Nn
+	\caoutchouc_unique:N {
+		\caoutchouc_unique_step:N
+			#1
+		\bool_while_do:nn {
+			\cs_if_exist_p:c
+				{ #1 } } {
+			\caoutchouc_unique_step:N
+				#1 } }
 
 \cs_new:Nn
 	\caoutchouc_encap:NNn {
