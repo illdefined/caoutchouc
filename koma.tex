@@ -1,0 +1,60 @@
+% Adjust KOMA-script formatting
+\@ifclassloaded
+	{ scrlttr2 }
+	{ } {
+		\addtokomafont
+			{ disposition } {
+				\colour
+					{ disposition }}
+	}
+\addtokomafont
+	{ pagination } {
+		\colour
+			{ pagination }}
+
+\caoutchouc_colour:Nn
+	\thepart
+	{ pagination }
+\caoutchouc_colour:Nn
+	\thechapter
+	{ pagination }
+\caoutchouc_colour:Nn
+	\thesection
+	{ pagination }
+\caoutchouc_colour:Nn
+	\thesubsection
+	{ pagination }
+\caoutchouc_colour:Nn
+	\thesubsubsection
+	{ pagination }
+\caoutchouc_colour:Nn
+	\theparagraph
+	{ pagination }
+\caoutchouc_colour:Nn
+	\thesubparagraph
+	{ pagination }
+\caoutchouc_colour:Nn
+	\thefigure
+	{ pagination }
+\caoutchouc_colour:Nn
+	\thetable
+	{ pagination }
+\caoutchouc_colour:Nn
+	\thefootnote
+	{ pagination }
+\caoutchouc_colour:Nn
+	\thempfootnote
+	{ pagination }
+
+\caoutchouc_colour:Nn
+	\labelenumi
+	{ pagination }
+\caoutchouc_colour:Nn
+	\labelenumii
+	{ pagination }
+\caoutchouc_colour:Nn
+	\labelenumiii
+	{ pagination }
+\caoutchouc_colour:Nn
+	\labelenumiv
+	{ pagination }

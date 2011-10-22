@@ -1,0 +1,35 @@
+\cs_new:Nn
+	\caoutchouc_encap:NNn {
+		\tl_set_eq:NN
+			#2 #1
+		\tl_set:Nn
+			#1 { #3 }
+		\tl_replace_all:Nnn
+			#1 { #1 } { #2 }
+	}
+
+\cs_generate_variant:Nn
+	\caoutchouc_encap:NNn
+		{ Ncn }
+
+\cs_new:Nn
+	\caoutchouc_encap:Nn {
+		\caoutchouc_unique:N
+			\l_tmpa_tl
+		\caoutchouc_encap:Ncn
+			#1
+			{ \l_tmpa_tl }
+			{ #2 }
+	}
+
+\cs_new:Nn
+	\caoutchouc_colour:Nn {
+		\caoutchouc_encap:Nn
+			#1 {
+			\color_group_begin:
+				\colour
+					{ #2 }
+				#1
+			\color_group_end:
+		}
+	}

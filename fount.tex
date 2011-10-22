@@ -1,0 +1,53 @@
+% Fount settings
+\RequirePackage
+	{ fontspec }
+
+\defaultfontfeatures {
+	Mapping = tex-text
+}
+
+\setmainfont
+	{ Latin~Modern~Roman }
+\setsansfont
+	{ Latin~Modern~Sans }
+\setmonofont
+	{ Latin~Modern~Mono }
+
+\tl_set:Nn
+	\familydefault
+	\sfdefault
+
+% Mathematics
+\RequirePackage
+	{ amsmath }
+\RequirePackage
+	[ math-style = upright ]
+	{ unicode-math }
+
+\setmathfont
+	{ Latin~Modern~Math }
+
+% CJK fount settings
+\RequirePackage [
+		CJKnumber,
+		SlantFont ]
+	{ xeCJK }
+
+\setCJKmainfont [
+		UprightFont = { *~regular },
+		BoldFont = { *~bold } ]
+	{ M+~2c }
+\setCJKsansfont [
+		UprightFont = { *~regular },
+		BoldFont = { *~bold } ]
+	{ M+~2c }
+
+\normalspacedchars
+	{ „“”‚‘’ }
+
+\RequirePackage
+	{ ruby }
+
+\tl_set:Nn
+	\rubysep
+	{ 0ex }
