@@ -46,8 +46,9 @@
 \ProcessKeysOptions
 	{ caoutchouc }
 
-\LoadClass
-	[ parskip = half ]
+\LoadClass [
+		fontsize = 10pt,
+		parskip = half ]
 	{ \g_caoutchouc_class }
 
 
