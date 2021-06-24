@@ -5,6 +5,8 @@
 \ProvidesClass
 	{ caoutchouc }
 
+\XeTeXgenerateactualtext = 1
+
 \cs_new:Nn
 	\caoutchouc_module:n {
 		\file_input:n
