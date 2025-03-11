@@ -1,0 +1,19 @@
+name: Nix flake check
+
+on:
+  - push
+  - pull_request
+  - workflow_dispatch
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        runner:
+          - ubuntu-latest
+    
+    runs-on: ${{ matrix.runner }}
+    steps:
+    - uses: actions/checkout@v4
+    - uses: illdefined/nix@main
+    - run: nix flake check
