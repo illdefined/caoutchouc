@@ -1,0 +1,84 @@
+{
+  "nodes": {
+    "iosevka": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1764715297,
+        "narHash": "sha256-Kn3smuYGdLhawuyy72N3stUe9EVrNa1INo17MFQJJ2g=",
+        "rev": "a12b6f9b0227380ad12fe6900eafef4eb9cf8b41",
+        "type": "tarball",
+        "url": "https://woof.rip/api/v1/repos/mikael/iosevka/archive/a12b6f9b0227380ad12fe6900eafef4eb9cf8b41.tar.gz?rev=a12b6f9b0227380ad12fe6900eafef4eb9cf8b41"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://woof.rip/mikael/iosevka/archive/main.tar.gz"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1764642553,
+        "narHash": "sha256-4bdSI51wM5D29KfMM1vu4gNEwZMNsg9WMtZIABmExB4=",
+        "rev": "f720de59066162ee879adcc8c79e15c51fe6bfb4",
+        "type": "tarball",
+        "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.05pre905319.f720de590661/nixexprs.tar.xz?lastModified=1764642553&rev=f720de59066162ee879adcc8c79e15c51fe6bfb4"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.xz"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1766870016,
+        "narHash": "sha256-g5DRB9fAyEv6Xf41Bj9RpVl9th0Zz+v1jgvJVg51W3w=",
+        "path": "/nix/store/bipw5p0cd9spcqfyg5aiwqh70qnhjgsr-source",
+        "rev": "5c2bc52fb9f8c264ed6c93bd20afa2ff5e763dce",
+        "type": "path"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
+        "lastModified": 1767364772,
+        "narHash": "sha256-G6ie+qOCRSV7wzOY+6L1o8GvcH1qDcE/DTzDT4CRdNw=",
+        "rev": "16c7794d0a28b5a37904d55bcca36003b9109aaa",
+        "type": "tarball",
+        "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.05pre921317.16c7794d0a28/nixexprs.tar.xz?lastModified=1767364772&rev=16c7794d0a28b5a37904d55bcca36003b9109aaa"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.xz"
+      }
+    },
+    "root": {
+      "inputs": {
+        "iosevka": "iosevka",
+        "nixpkgs": "nixpkgs_2",
+        "xdvipdfmx": "xdvipdfmx"
+      }
+    },
+    "xdvipdfmx": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_3"
+      },
+      "locked": {
+        "lastModified": 1750678664,
+        "narHash": "sha256-0k6gCIhzGFg0sWA8r68It9qe/7hoU3Xo0wgKFdJlJBg=",
+        "rev": "2f1582c3dad2c29c603b87377316895fded1304e",
+        "type": "tarball",
+        "url": "https://woof.rip/api/v1/repos/mikael/xdvipdfmx/archive/2f1582c3dad2c29c603b87377316895fded1304e.tar.gz?rev=2f1582c3dad2c29c603b87377316895fded1304e"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://woof.rip/mikael/xdvipdfmx/archive/main.tar.gz"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

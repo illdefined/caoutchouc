@@ -1,0 +1,38 @@
+\ProvidesExplFile{\g_file_curr_name_str}{1980-01-01}{}
+	{Quotation}
+
+\RequirePackage [ autostyle = true,	autopunct = false ] { csquotes }  % load after minted
+
+\NewCommandCopy { \__caoutchouc_enquote } { \enquote }
+\RenewDocumentCommand \enquote { m } {
+	\__caoutchouc_enquote {
+		\soufre_colour_text:nn { quotation } { #1 }
+	}
+}
+
+\RenewDocumentCommand \mkcitation { m } { #1\,\footnote }
+\RenewDocumentCommand \mktextquote { m m m m m m } {
+	#1
+	\color_group_begin:
+	\color_select:n { quotation }
+	#2 #4
+	\color_group_end:
+	#3 #6 #5
+}
+
+\RenewDocumentCommand \mkblockquote { m m } {
+	\color_group_begin:
+	\color_select:n { quotation }
+	#1 #2
+	\color_group_end:
+}
+
+\RenewDocumentCommand \mkbegdispquote { m m } {
+	\color_group_begin:
+	\color_select:n { quotation }
+}
+
+\RenewDocumentCommand \mkenddispquote { m m } {
+	#1 #2
+	\color_group_end:
+}

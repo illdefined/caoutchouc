@@ -1,96 +1,21 @@
-\RequirePackage
-	{ expl3 }
+\NeedsTeXFormat{LaTeX2e}[2023-11-01]
+\ProvidesExplClass{caoutchouc}{1980-01-01}{0.0.0}
+	{caoutchouc compatibility class}
 
-\ExplSyntaxOn
-\ProvidesClass
-	{ caoutchouc }
+\str_new:N \g__caoutchouc_class_str
+\cs_new_protected:Nn \__caoutchouc_class:n {
+	\str_gset:Nn \g__caoutchouc_class_str { #1 }
+}
 
-\XeTeXgenerateactualtext = 1
+\keys_define:nn { caoutchouc } {
+	class .choice:,
+	class / book .code:n = { \__caoutchouc_class:n { scrbook } },
+	class / report .code:n = { \__caoutchouc_class:n { scrreprt } },
+	class / article .code:n = { \__caoutchouc_class:n { scrartcl } },
+	class / letter .code:n = { \__caoutchouc_class:n { scrlttr2 } },
+	class .initial:n = { article },
+}
 
-\cs_new:Nn
-	\caoutchouc_module:n {
-		\file_input:n
-			{ #1 .tex } }
-
-\caoutchouc_module:n
-	{ unique }
-
-\caoutchouc_module:n
-	{ encap }
-
-\RequirePackage
-	{ l3keys2e }
-
-\keys_define:nn
-	{ caoutchouc } {
-		class .choice:,
-		class / book .code:n = {
-			\tl_set:Nn
-				\g_caoutchouc_class
-				{ scrbook }},
-		class / report .code:n = {
-			\tl_set:Nn
-				\g_caoutchouc_class
-				{ scrreprt }},
-		class / article .code:n = {
-			\tl_set:Nn
-				\g_caoutchouc_class
-				{ scrartcl }},
-		class / letter .code:n = {
-			\tl_set:Nn
-				\g_caoutchouc_class
-				{ scrlttr2 }}}
-
-\keys_set:nn
-	{ caoutchouc }
-	{ class = article }
-
-\ProcessKeysOptions
-	{ caoutchouc }
-
-\LoadClass [
-		fontsize = 10pt,
-		parskip = half ]
-	{ \g_caoutchouc_class }
-
-
-\caoutchouc_module:n
-	{ fount }
-
-\RequirePackage
-	{ polyglossia }
-
-\caoutchouc_module:n
-	{ colour }
-
-\caoutchouc_module:n
-	{ hyperref }
-
-\caoutchouc_module:n
-	{ quotation }
-
-% Miscellaneous packages
-\RequirePackage
-	{ paralist, units, verbatim, xltxtra }
-
-\caoutchouc_module:n
-	{ koma }
-
-% Highlighting
-\DeclareDocumentCommand
-	\emph { m } {
-		\textcolour
-			{ emphasis }
-			{ \em #1 }}
-\DeclareDocumentCommand
-	\strong { m } {
-		\textcolour
-			{ strong }
-			{ \bfseries #1 }}
-
-\widowpenalty = 10000
-\clubpenalty = 10000
-\hyphenpenalty = 2500
-\tolerance = 1000
-
-% vim:ft=tex
+\ProcessKeyOptions
+\LoadClass { \g__caoutchouc_class_str }
+\RequirePackage { caoutchouc }

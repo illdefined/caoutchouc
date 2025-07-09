@@ -1,0 +1,91 @@
+\ProvidesExplFile{\g_file_curr_name_str}{1980-01-01}{}
+	{Multilingualisation}
+
+% Multilingualisation
+\RequirePackage [ babelshorthands = false ] { polyglossia }  % Load after xeCJK
+\setdefaultlanguage { en-GB }
+\ExplSyntaxOn
+\setotherlanguage [ capitaleszett = true ] { de-DE }
+\ExplSyntaxOn
+\setotherlanguages { fr-FR, es-ES, pt-PT, ja, ru } % la-x-classic, grc }
+\ExplSyntaxOn
+
+\RequirePackage [ calc, useregional = text ] { datetime2 }
+\RequirePackage [ foreign = international ] { phonenumbers }
+
+\prop_new_linked:N \g__caoutchouc_locale_prop
+\prop_gset_from_keyval:Nn \g__caoutchouc_locale_prop {
+	en-GB / decimal-separator = { . },
+	de-DE / decimal-separator = { , },
+	fr-FR / decimal-separator = { , },
+	es-ES / decimal-separator = { , },
+	pt-PT / decimal-separator = { , },
+	ja / decimal-separator = { . },
+	ru / decimal-separator = { , },
+}
+
+\msg_new:nnn { caoutchouc } { locale-unknown } { Label~unknown~for~language~#1:~#2 }
+
+\cs_new_protected:Nn \caoutchouc_locale_provide:nnnn {
+	\prop_gput:Nnn \g__caoutchouc_locale_prop { #1 - #2 / #3 } { #4 }
+}
+
+\cs_new_protected:Nn \caoutchouc_locale_provide_from_keyval:nnn {
+	\keyval_parse:nnn {
+		\use_none:n
+	} {
+		\caoutchouc_locale_provide:nnnn { #1 } { #2 }
+	} { #3 }
+}
+
+\cs_new_protected:Nn \caoutchouc_locale_provide:nnn {
+	\prop_gput:Nnn \g__caoutchouc_locale_prop { #1 / #2 } { #3 }
+}
+
+\cs_new_protected:Nn \caoutchouc_locale_provide_from_keyval:nn {
+	\keyval_parse:nnn {
+		\use_none:n
+	} {
+		\caoutchouc_locale_provide:nnn { #1 }
+	} { #2 }
+}
+
+\cs_new:Nn \caoutchouc_locale:nnn {
+	\prop_if_in:NnTF \g__caoutchouc_locale_prop { #1 - #2 / #3 } {
+		\prop_item:Nn \g__caoutchouc_locale_prop { #1 - #2 / #3 }
+	} {
+		\prop_if_in:NnTF \g__caoutchouc_locale_prop { #1 / #3 } {
+			\prop_item:Nn \g__caoutchouc_locale_prop { #1 / #3 }
+		} {
+			\msg_expandable_error:nnnn { caoutchouc } { locale-unknown } { #1 } { #2 }
+		}
+	}
+}
+
+\cs_generate_variant:Nn \caoutchouc_locale:nnn { een }
+
+\cs_new:Nn \caoutchouc_locale:n {
+	\caoutchouc_locale:een {
+		\BCPdata { language }
+	} {
+		\BCPdata { region }
+	} { #1 }
+}
+
+\msg_new:nnn { caoutchouc } { language } { Switching~language: #1 }
+
+\tl_gput_right:Nn \polyglossia@language@switched {
+	\msg_info:nne { caoutchouc } { language } {
+		\BCPdata { tag }
+	}
+
+	\DTMtryregional {
+		\BCPdata { language }
+	} {
+		\BCPdata { region }
+	}
+
+	\sisetup {
+		output-decimal-marker = \caoutchouc_locale:n { decimal-separator }
+	}
+}

@@ -1,0 +1,139 @@
+\ProvidesExplFile{\g_file_curr_name_str}{1980-01-01}{}
+	{Colour definitions}
+
+\prop_const_from_keyval:Nn \c_caoutchouc_colour_prop {
+	PrussianBlue = { 0, 0.19140625, 0.32421875 },
+	MidnightGreen = { 0, 0.28515625, 0.32421875 },
+	PhthaloGreen = { 0.0703125, 0.20703125, 0.140625 },
+	BerlinBlue = { 0.13671875, 0.171875, 0.24609375 },
+	DarkSlateGrey = { 0.18359375, 0.30859375, 0.30859375 },
+	TyrianPurple = { 0.3984375, 0.0078125, 0.234375 },
+	Sangria = { 0.5703125, 0, 0.0390625 },
+}
+
+\prop_map_inline:Nn \c_caoutchouc_colour_prop {
+	\color_set:nnn { #1 } { rgb } { #2 }
+	\definecolor { #1 } { rgb } { #2 }
+}
+
+\prop_const_from_keyval:Nn \c_caoutchouc_colour_alias_prop {
+	disposition = PrussianBlue,
+	emphasis = TyrianPurple,
+	hyperlink = BerlinBlue,
+	pagination = DarkSlateGrey,
+	quotation = PhthaloGreen,
+	strong = Sangria,
+}
+
+\prop_map_inline:Nn \c_caoutchouc_colour_alias_prop {
+	\color_set:nn { #1 } { #2 }
+	\definecolor { #1 } { named } { #2 }
+}
+
+% Hyperlink colour
+\hypersetup { colorlinks = true, allcolors = hyperlink }
+
+\bool_lazy_and:nnTF { \cs_if_exist_p:N \IfExistskomafont } { \cs_if_exist_p:N \addtokomafont } {
+	\cs_new:Nn \__caoutchouc_koma_colour:nn {
+		\IfExistskomafont { #1 } {
+			\addtokomafont { #1 } {
+				\color_select:n { #2 }
+			}
+		} { }
+	}
+
+	\keyval_parse:NNn \use_none:n \__caoutchouc_koma_colour:nn {
+		subject = disposition,
+		titlehead = disposition,
+		title = disposition,
+		subtitle = disposition,
+
+		part = disposition,
+		chapterprefix = disposition,
+		disposition = disposition,
+		captionlabel = disposition,
+
+		%pagenumber = pagination,
+		%footnotelabel = pagination,
+
+		partentrynumber = pagination,
+		chapterentrypagenumber = pagination,
+		sectionentrynumber = pagination,
+
+		enumeratelabel = pagination,
+		itemizelabel = pagination,
+	}
+
+	\tl_if_exist:NT \partformat {
+		\tl_gset:Nn \partformat {
+			\partname\nobreakspace
+			\soufre_colour_text:nn { pagination } { \thepart\autodot }
+		}
+	}
+
+	\tl_if_exist:NT \chapterformat {
+		\tl_gset:Nn \chapterformat {
+			\mbox {
+				\chapappifchapterprefix { \nobreakspace }
+				\soufre_colour_text:nn { pagination } { \thechapter\autodot }
+				\IfUsePrefixLine { } { \enskip }
+			}
+		}
+	}
+
+	\tl_map_inline:nn {
+		\sectionformat \subsectionformat \subsubsectionformat \paragraphformat \subparagraphformat
+	} {
+		\tl_if_exist:NT #1 {
+			\soufre_colour_wrap:Nn #1 { pagination }
+		}
+	}
+} {
+	\soufre_colour_wrap:Nn \thepage { pagination }
+	\hook_gput_code:nnn { cmd/pagenumbering/after } { . } {
+		\soufre_colour_wrap:Nn \thepage { pagination }
+	}
+
+	% Colour various item numbers
+	\tl_map_inline:nn {
+		\thepart \thechapter \thesection \thesubsection \theparagraph \thesubparagraph
+		\thefigure \thetable
+		\thefootnote \thempfootnote
+		\labelenumi \labelenumii \labelenumiii \labelenumiv
+		\labelitemi \labelitemii \labelitemiii \labelitemiv
+	} {
+		\tl_if_exist:NT #1 {
+			\soufre_colour_wrap:Nn #1 { pagination }
+		}
+	}
+
+	% Hook appendix initialisation as it re‐defines the top‐level sectioning
+	\hook_gput_code:nnn { cmd/appendix/after } { . } {
+		\tl_map_inline:nn {
+			\thechapter \thesection
+		} {
+			\tl_if_exist:NT #1 {
+				\soufre_colour_wrap:Nn #1 { pagination }
+				\tl_map_break:
+			}
+		}
+	}
+}
+
+\strongfontdeclare {
+	% Bold
+	\bfseries
+	\color_select:n { strong },
+
+	% Heavy
+	\fontseries { eb }
+	\selectfont
+	\color_select:n { strong },
+
+	% Black
+	\fontseries { ub }
+	\selectfont
+	\color_select:n { strong }
+}
+
+%\soufre_colour_append:Nn \em { emphasis }

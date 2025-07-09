@@ -1,0 +1,199 @@
+\ProvidesExplFile{\g_file_curr_name_str}{1980-01-01}{}
+	{Fractions}
+
+% Fractions
+
+% Numerator substitutions
+\prop_const_linked_from_keyval:Nn \c__caoutchouc_numr_subst_prop {
+	\# = numr,
+	\$ = numr,
+	( = numr,
+	) = numr,
+	+ = numr,
+	{ , } = numr,
+	- = numr,
+	. = numr,
+	0 = numr,
+	1 = numr,
+	2 = numr,
+	3 = numr,
+	4 = numr,
+	5 = numr,
+	6 = numr,
+	7 = numr,
+	8 = numr,
+	9 = numr,
+	{ = } = numr,
+	A = sups,
+	B = sups,
+	C = sups,
+	D = sups,
+	E = sups,
+	F = sups,
+	G = sups,
+	H = sups,
+	I = sups,
+	J = sups,
+	K = sups,
+	L = sups,
+	M = sups,
+	N = sups,
+	O = sups,
+	P = sups,
+	Q = sups,
+	R = sups,
+	S = sups,
+	T = sups,
+	U = sups,
+	V = sups,
+	W = sups,
+	X = sups,
+	Y = sups,
+	Z = sups,
+	a = sups,
+	b = sups,
+	c = sups,
+	d = sups,
+	e = sups,
+	f = sups,
+	g = sups,
+	h = sups,
+	i = sups,
+	j = sups,
+	k = sups,
+	l = sups,
+	m = sups,
+	n = numr,
+	o = sups,
+	p = sups,
+	q = sups,
+	r = sups,
+	s = sups,
+	t = sups,
+	u = sups,
+	v = sups,
+	w = sups,
+	x = sups,
+	y = sups,
+	z = sups,
+	¢ = numr,  % U+00A2
+	£ = numr,  % U+00A3
+	¤ = numr,  % U+00A4
+	¥ = numr,  % U+00A5
+	β = ᵝ,  % U+0392
+	α = ᵅ,  % U+03B1
+	γ = ᵞ,  % U+03B3
+	φ = ᵠ,  % U+03C6
+	χ = ᵡ,  % U+03C7
+	₣ = numr,  % U+20A3
+	₤ = numr,  % U+20A4
+	₧ = numr,  % U+20A7
+	€ = numr,  % U+20AC
+}
+
+% Denominator substitutions
+\prop_const_linked_from_keyval:Nn \c__caoutchouc_dnom_subst_prop {
+	\# = dnom,
+	\$ = dnom,
+	( = dnom,
+	) = dnom,
+	+ = dnom,
+	{ , } = dnom,
+	- = dnom,
+	. = dnom,
+	0 = dnom,
+	1 = dnom,
+	2 = dnom,
+	3 = dnom,
+	4 = dnom,
+	5 = dnom,
+	6 = dnom,
+	7 = dnom,
+	8 = dnom,
+	9 = dnom,
+	{ = } = dnom,
+	a = ₐ,
+	e = ₑ,
+	n = dnom,
+	o = ₒ,
+	x = ₓ,
+	¢ = dnom,  % U+00A2
+	£ = dnom,  % U+00A3
+	¤ = dnom,  % U+00A4
+	¥ = dnom,  % U+00A5
+	β = ᵦ,  % U+0392
+	γ = ᵧ,  % U+03B2
+	ρ = ᵨ,  % U+03C1
+	φ = φ,  % U+03C6
+	χ = ᵪ,  % U+03C7
+	₣ = dnom,  % U+20A3
+	₤ = dnom,  % U+20A4
+	₧ = dnom,  % U+20A7
+	€ = dnom,  % U+20AC
+}
+
+\cs_generate_variant:Nn \str_case:nnF { VnF }
+
+\cs_new_protected:Nn \caoutchouc_numr_subst:n {
+	\prop_get:NnNTF \c__caoutchouc_numr_subst_prop { #1 } \l__caoutchouc_numr_subst {
+		\str_case:VnF { \l__caoutchouc_numr_subst } {
+			{ numr } {
+				{
+					\addfontfeature { VerticalPosition = Numerator }
+					#1
+				}
+			}
+
+			{ sups } {
+				\raisebox { -0.2ex } {
+					\addfontfeature { VerticalPosition = Superior }
+					#1
+				}
+			}
+		} {
+			\l__caoutchouc_numr_subst
+		}
+	} {
+		\raisebox { 0.8ex } {
+			\addfontfeature { Scale = 0.5 }
+			\bfseries
+			#1
+		}
+	}
+}
+
+\cs_new_protected:Nn \caoutchouc_dnom_subst:n {
+	\prop_get:NnNTF \c__caoutchouc_dnom_subst_prop { #1 } \l__caoutchouc_dnom_subst {
+		\str_case:VnF { \l__caoutchouc_dnom_subst } {
+			{ dnom } {
+				{
+					\addfontfeature { VerticalPosition = Denominator }
+					#1
+				}
+			}
+
+			{ subs } {
+				{
+					\addfontfeature { VerticalPosition = Inferior }
+					#1
+				}
+			}
+		} {
+			\l__caoutchouc_dnom_subst
+		}
+	} {
+		{
+			\addfontfeature { Scale = 0.5 }
+			\bfseries
+			#1
+		}
+	}
+}
+
+\NewDocumentCommand { \sfrac } { m m } {
+	\text {
+		\soufre_grapheme_map:Nn \caoutchouc_numr_subst:n { #1 }
+		\textfractionsolidus
+		\soufre_grapheme_map:Nn \caoutchouc_dnom_subst:n { #2 }
+	}
+}

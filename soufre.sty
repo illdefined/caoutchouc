@@ -1,0 +1,60 @@
+\NeedsTeXFormat{LaTeX2e}[2023-11-01]
+\ProvidesExplPackage{soufre}{1980-01-01}{0.0.0}
+	{Low‐level auxiliary functionality for caoutchouc}
+
+\cs_new:Nn \__soufre_grapheme_map_group:Nn {
+	{
+		\__soufre_grapheme_map:Nn #1 #2 \q_recursion_tail \q_recursion_stop
+	}
+}
+
+\cs_new:Nn \__soufre_grapheme_map:NnN {
+	\bool_lazy_or:nnTF { \token_if_letter_p:N #3 } { \token_if_other_p:N #3 } {
+		\__soufre_grapheme_map:NnN #1 { #2 #3 }
+	} {
+		\text_map_function:nN { #2 } #1
+		\__soufre_grapheme_map:Nn #1 #3
+	}
+}
+
+\cs_new:Nn \__soufre_grapheme_map:Nn {
+	\quark_if_recursion_tail_stop:n { #2 }
+	\token_if_group_begin:NTF #2 {
+		\__soufre_grapheme_map_group:Nn #1 #2
+	} {
+		\bool_lazy_or:nnTF { \token_if_letter_p:N #2 } { \token_if_other_p:N #2 } {
+			\__soufre_grapheme_map:NnN #1 { #2 }
+		} {
+			\exp_not:N #2
+			\__soufre_grapheme_map:Nn #1
+		}
+	}
+}
+
+\cs_new:Nn \soufre_grapheme_map:Nn {
+	\__soufre_grapheme_map:Nn #1 #2 \q_recursion_tail \q_recursion_stop
+}
+
+
+\cs_new_protected:Nn \soufre_colour_text:nn {
+	\color_group_begin:
+	\color_select:n { #1 }
+	#2
+	\color_group_end:
+}
+
+\cs_new_protected:Nn \soufre_colour_wrap:Nn {
+	\tl_gset:Ne #1 {
+		\color_group_begin:
+		\color_select:n { #2 }
+		\exp_not:V #1
+		\color_group_end:
+	}
+}
+
+\cs_new_protected:Nn \soufre_colour_append:Nn {
+	\tl_gset:Ne #1 {
+		\exp_not:V #1
+		\color_select:n { #2 }
+	}
+}

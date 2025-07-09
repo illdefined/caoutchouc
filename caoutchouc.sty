@@ -1,0 +1,132 @@
+\NeedsTeXFormat{LaTeX2e}[2023-11-01]
+\ProvidesExplPackage{caoutchouc}{1980-01-01}{0.0.0}
+	{Personal LaTeX playground}
+
+% Ensure correct engine
+\sys_if_engine_xetex:F {
+	\msg_new:nnn { caoutchouc } { engine } { Package~requires~XeTeX~engine }
+	\msg_fatal:nn { caoutchouc } { engine }
+}
+
+% Normalise Unicode to NFD form
+\XeTeXinputnormalization 2
+
+% Generate /ActualText entry for better copy / paste and search
+\XeTeXgenerateactualtext 1
+
+% Suppress loading of incompatible packages
+\msg_new:nnn { caoutchouc } { incompatible } { Suppressing~load~of~incompatible~package:~#1 }
+\clist_map_inline:nn {
+	babel,  % Polyglossia
+	CJK,  % xeCJK
+	ninecolors,  % xcolors with RGB colour space
+	amssymb, latexsymb  % Lete Sans Math package already provides those symbols
+} {
+	\disable@package@load { #1 } {
+		\msg_warning:nnn { caoutchouc } { incompatible } { #1 }
+	}
+}
+
+% Low‐level auxiliary functions
+\RequirePackage { soufre }
+
+% Page layout
+\cs_if_exist_use:NTF \KOMAoptions {
+	{
+		fontsize = 10pt,
+		parskip = half,
+	}
+} {
+	\setlength \parindent { 0pt }
+	\setlength \parskip { 0.5 \baselineskip~plus~0.5 \baselineskip }
+	\setlength \parfillskip { 1em~plus~1fil }
+}
+
+\clubpenalty 10000
+\widowpenalty 10000
+\displaywidowpenalty 10000
+\brokenpenalty 10000
+\predisplaypenalty 10000
+\interlinepenalty 100
+
+\tl_gset:Nn \labelitemi { \cs_if_exist_use:NT \usekomafont { { labelitemi } } -- }
+\tl_gset:Nn \labelitemii { \cs_if_exist_use:NT \usekomafont { { labelitemii } } ◦ }
+\tl_gset:Nn \labelitemiii { \cs_if_exist_use:NT \usekomafont { { labelitemiii } } · }
+\tl_gset:Nn \labelitemiv { \cs_if_exist_use:NT \usekomafont { { labelitemiv } } - }
+
+\RequirePackage [ nospace ] { varioref }  % Load before hyperref and cleverref
+
+% PDF generation
+\RequirePackage [ rgb, hyperref ] { xcolor }
+\RequirePackage { hyperref }
+\RequirePackage { graphicx }
+
+% Fount settings
+\RequirePackage [ no-math ] { fontspec }
+\defaultfontfeatures+ {
+	Ligatures = { Required, Common, Contextual },
+	Fractions = On
+}
+
+\RequirePackage [ default, defaultsans ] { lato }
+\RequirePackage [ math-style = upright ] { lete-sans-math }
+\RequirePackage { realscripts }
+\setmonofont [ Scale = MatchLowercase ] { idiosyn~sans }
+
+% CJK founts
+\RequirePackage [
+	CJKmath = true,
+	AutoFallBack = true,
+	PunctStyle = plain  % Prevent xeCJK from messing up punctuation – may need refinement
+] { xeCJK }  % Load before Polyglossia
+
+\setCJKmainfont [ FallBack = Noto~Sans~CJK ] { M~PLUS~2 }
+\setCJKsansfont [ FallBack = Noto~Sans~CJK ] { M~PLUS~2 }
+\setCJKmonofont [ FallBack = Noto~Sans~Mono~CJK ] { M~PLUS~1~Code }
+\RequirePackage { ruby }
+
+% Dynamic TOC indentation
+\RequirePackage { tocbasic }
+\DeclareTOCStyleEntries [ dynindent, dynnumwidth ] { tocline } {
+	section, subsection, paragraph, figure, table
+}
+
+\file_input:n{caoutchouc-m17n.tex}
+\file_input:n{caoutchouc-frac.tex}
+
+% Units
+\RequirePackage { siunitx }
+
+\sisetup {
+	% Adapt style to environment
+	mode = text,
+	reset-text-family = false,
+	reset-text-series = false,
+	reset-text-shape = false,
+	propagate-math-font = true,
+	reset-math-version = false,
+	text-family-to-math = true,
+	text-series-to-math = true,
+
+	% Fractions
+	per-mode = fraction,
+	fraction-command = \sfrac,
+
+	retain-explicit-plus = true,
+}
+
+% Tables
+\RequirePackage  { tabularray }
+\UseTblrLibrary { amsmath }
+\UseTblrLibrary { booktabs }
+\UseTblrLibrary { diagbox }
+\UseTblrLibrary { siunitx }
+\UseTblrLibrary { varwidth }
+
+\file_input:n{caoutchouc-colour.tex}
+\file_input:n{caoutchouc-quote.tex}
+\file_input:n{caoutchouc-uri.tex}
+
+% Cross‐references
+\RequirePackage [ noabbrev ] { cleveref }
+% No package loading after cleveref

@@ -1,0 +1,271 @@
+\ProvidesExplFile{\g_file_curr_name_str}{1980-01-01}{}
+	{Uniform Resource Identifiers}
+
+\cs_new_protected:Nn \caoutchouc_urlencode:Nn {
+	\str_set_convert:Nnnn #1 { #2 } { default } { utf8/url }
+}
+
+\cs_new_protected:Nn \__caoutchouc_uri_query:n {
+	\caoutchouc_urlencode:Nn \l_tmpa_str { #1 }
+	\str_put_right:Ne \l__caoutchouc_uri_query_str {
+		\str_if_empty:NF \l__caoutchouc_uri_query_str { \& }
+		\l_tmpa_str
+	}
+}
+
+\cs_new_protected:Nn \__caoutchouc_uri_query:nn {
+	\caoutchouc_urlencode:Nn \l_tmpa_str { #1 }
+	\caoutchouc_urlencode:Nn \l_tmpb_str { #2 }
+	\str_put_right:Ne \l__caoutchouc_uri_query_str {
+		\str_if_empty:NF \l__caoutchouc_uri_query_str { \& }
+		\l_tmpa_str = \l_tmpb_str
+	}
+}
+
+\keys_define:nn { caoutchouc / uri } {
+	scheme .code:n = {
+		\caoutchouc_urlencode:Nn \l__caoutchouc_uri_scheme_str { #1 }
+	},
+
+	authority .code:n = {
+		\caoutchouc_urlencode:Nn \l__caoutchouc_uri_authority_str { #1 }
+	},
+
+	authority / userinfo .code:n = {
+		\caoutchouc_urlencode:Nn \l__caoutchouc_uri_userinfo_str { #1 }
+	},
+
+	authority / host .code:n = {
+		\caoutchouc_urlencode:Nn \l__caoutchouc_uri_host_str { #1 }
+	},
+
+	authority / port .int_set:N = \l__caoutchouc_uri_port_int,
+
+	path .code:n = {
+		\seq_set_split:Nnn \l_tmpa_seq { / } { #1 }
+		\seq_clear_new:N \l__caoutchouc_uri_path_seq
+		\seq_map_inline:Nn \l_tmpa_seq {
+			\caoutchouc_urlencode:Nn \l_tmpa_str { ##1 }
+			\seq_put_right:NV \l__caoutchouc_uri_path_seq \l_tmpa_str
+		}
+	},
+
+	query .code:n = {
+		\str_clear_new:N \l__caoutchouc_uri_query_str
+		\keyval_parse:nnn { \__caoutchouc_uri_query:n } { \__caoutchouc_uri_query:nn } { #1 }
+	},
+
+	fragment .code:n = {
+		\caoutchouc_urlencode:Nn \l__caoutchouc_uri_fragment_str { #1 }
+	},
+
+	scheme .value_required:n = true,
+	scheme .initial:V = \c_empty_str,
+	authority .value_required:n = true,
+	authority .initial:V = \c_empty_str,
+	authority / userinfo .value_required:n = true,
+	authority / userinfo .initial:V = \c_empty_str,
+	authority / host .value_required:n = true,
+	authority / host .initial:V = \c_empty_str,
+	authority / port .value_required:n = true,
+	authority / port .initial:n = -1,
+	path .value_required:n = true,
+	path .initial:V = \c_empty_str,
+	query .value_required:n = true,
+	query .initial:V = \c_empty_str,
+	fragment .value_required:n = true,
+	fragment .initial:V = \c_empty_str,
+}
+
+\msg_new:nnn { caoutchouc } { uri-authority-ambiguity } {
+	No~authority~defined,~but~path~begins~with~empty~component:~#1
+}
+
+\msg_new:nnn { caoutchouc } { uri-authority-absolute } {
+	Authority~defined,~but~path~is~not~absolute:~#1
+}
+
+\cs_generate_variant:Nn \int_compare_p:nNn { VNn }
+\cs_generate_variant:Nn \int_compare:nNnT { VNn }
+
+\cs_new:Nn \caoutchouc_uri:n {
+	\group_begin:
+
+	\keys_set:nn { caoutchouc / uri } { #1 }
+
+	\l__caoutchouc_uri_scheme_str :
+	\str_if_empty:NTF \l__caoutchouc_uri_authority_str {
+		\bool_lazy_all:nF {
+			{ \str_if_empty_p:N \l__caoutchouc_uri_userinfo_str }
+			{ \str_if_empty_p:N \l__caoutchouc_uri_host_str }
+			{
+				\int_compare_p:VNn \l__caoutchouc_uri_port_int < { 0 }
+			}
+		} {
+			//
+			\str_if_empty:NF \l__caoutchouc_uri_userinfo_str {
+				\l__caoutchouc_uri_userinfo_str @
+			}
+			\l__caoutchouc_uri_host_str
+			\int_compare:VNnT \l__caoutchouc_uri_port_str >= { 0  } {
+				: \int_to_arabic:V \l__caoutchouc_uri_port_int
+			}
+		}
+	} {
+		// \l__caoutchouc_uri_authority_str
+	}
+
+	\str_if_empty:NTF \l__caoutchouc_uri_authority_str {
+		% Path cannot begin with // if no authority is defined
+		\bool_lazy_and:nnT {
+			\int_compare_p:nNn {
+				\seq_count:N \l__caoutchouc_uri_path_seq
+			} > { 3 }
+		} {
+			\tl_if_empty:e {
+				\seq_item:Nn \l__caoutchouc_uri_path_seq { 2 }
+			}
+		} {
+			\msg_fatal:nnn { caoutchouc } { uri-authority-ambiguity } { #1 }
+		}
+	} {
+		% Path must be empty or absolute if authority is defined
+		\bool_lazy_or:nnT {
+			\seq_if_empty_p:N \l__caoutchouc_uri_path_seq
+		} {
+			\tl_if_empty_p:e {
+				\seq_item:Nn \l__caoutchouc_uri_path_seq { 2 }
+			}
+		} {
+			\msg_fatal:nnn { caoutchouc } { uri-authority-absolute } { #1 }
+		}
+	}
+
+	\seq_use:Nn \l__caoutchouc_uri_path_seq { / }
+
+	\str_if_empty:NF \l__caoutchouc_uri_query_str {
+		?
+		\l__caoutchouc_uri_query_str
+	}
+
+	\str_if_empty:NF \l__caoutchouc_uri_fragment_str {
+		\#
+		\l__caoutchouc_uri_fragment_str
+	}
+
+	\group_end:
+}
+
+\keys_define:nn { caoutchouc / payto } {
+	authority .str_set:N = \l__caoutchouc_payto_authority_str,
+	authority .value_required:n = true,
+	authority .initial:n = iban,
+	currency .choices:nn = { EUR, USD } {
+		\str_set_eq:NN \l__caoutchouc_payto_currency_str \l_keys_choice_tl
+	},
+	currency .value_required:n = true,
+	currency .initial:n = { EUR },
+	amount .fp_set:N = \l__caoutchouc_payto_amount_fp,
+	amount .value_required:n = true,
+	amount .initial:V = \c_nan_fp,
+	receiver .str_set:N = \l__caoutchouc_payto_receiver_str,
+	receiver .value_required:n = true,
+	receiver .initial:V = \c_empty_str,
+	sender .str_set:N = \l__caoutchouc_payto_sender_str,
+	sender .value_required:n = true,
+	sender .initial:V = \c_empty_str,
+	message .str_set:N = \l__caoutchouc_payto_message_str,
+	message .value_required:n = true,
+	message .initial:V = \c_empty_str,
+	instruction .str_set:N = \l__caoutchouc_payto_instruction_str,
+	instruction .value_required:n = true,
+	instruction .initial:V = \c_empty_str,
+}
+
+\cs_generate_variant:Nn \caoutchouc_uri:n { e }
+
+\regex_const:Nn \c__caoutchouc_payto_group_regex { ([A-Z0-9]{4}) }
+
+\NewDocumentCommand \payto { O { } m o } {
+	\group_begin:
+
+	\keys_set:nn { caoutchouc / payto } { #1 }
+
+	\IfNoValueTF { #3 } {
+		\regex_split:NnN \c__caoutchouc_payto_group_regex { #2 } \l_tmpa_seq
+		\seq_remove_all:Nn \l_tmpa_seq { }
+		\tl_set:Ne \l_tmpa_tl { \seq_use:Nn \l_tmpa_seq { \, } }
+	} {
+		\tl_set:Nn \l_tmpa_tl { #3 }
+	}
+
+	\exp_args:Nee \href {
+		\caoutchouc_uri:e {
+			scheme = payto,
+			authority = { \l__caoutchouc_payto_authority_str },
+			path = { / #2 },
+			query = {
+				\fp_if_nan:nF { \l__caoutchouc_payto_amount_fp } {
+					amount = {
+						\l__caoutchouc_currency_str : \fp_format:nn { \l__caoutchouc_uri_amount_fp } { f2 }
+					},
+				}
+
+				\str_if_empty:NF \l__caoutchouc_payto_receiver_str {
+					receiver = { \l__caoutchouc_payto_receiver_str },
+				}
+
+				\str_if_empty:NF \l__caoutchouc_payto_sender_str {
+					sender = { \l__caoutchouc_payto_sender_str },
+				}
+
+				\str_if_empty:NF \l__caoutchouc_payto_sender_str {
+					message = { \l__caoutchouc_payto_message_str },
+				}
+
+				\str_if_empty:NF \l__caoutchouc_payto_instruction_str {
+					instruction = { \l__caoutchouc_payto_instruction_str },
+				}
+			}
+		}
+	} {
+		\l_tmpa_tl
+	}
+
+	\group_end:
+}
+
+\keys_define:nn { caoutchouc / mailto } {
+	subject .str_set:N = \l__caoutchouc_mailto_subject_str,
+	subject .value_required:n = true,
+	subject .initial:V = \c_empty_str,
+	body .str_set:N = \l__caoutchouc_mailto_body_str,
+	body .value_required:n = true,
+	body .initial:V = \c_empty_str,
+}
+
+\NewDocumentCommand \mailto { O { } m o } {
+	\group_begin:
+
+	\keys_set:nn { caoutchouc / mailto } { #1 }
+
+	\exp_args:Nee \href {
+		\caoutchouc_uri:e {
+			scheme = mailto,
+			path = { #2 },
+			query = {
+				\str_if_empty:NF \l__caoutchouc_mailto_subject_str {
+					subject = { \l__caoutchouc_mailto_subject_str },
+				}
+
+				\str_if_empty:NF \l__caoutchouc_mailto_body_str {
+					body = { \l__caoutchouc_mailto_body_str },
+				}
+			}
+		}
+	} {
+		\IfNoValueTF { #3 } { #2 } { #3 }
+	}
+
+	\group_end:
+}
